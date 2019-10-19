@@ -1,9 +1,8 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import "./App.css";
 
 // Components
-import AlgoVisualizer from './AlgoVisualizer/AlgoVisualizer';
+import AlgoVisualizer from "./AlgoVisualizer/AlgoVisualizer";
 
 function App() {
   return (

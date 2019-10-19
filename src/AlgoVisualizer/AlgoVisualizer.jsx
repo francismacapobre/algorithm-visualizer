@@ -1,13 +1,14 @@
 import React, { Component } from "react";
 import Node from "./Node/Node";
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
+import { recursiveBacktracker } from "../mazeAlgorithms/recursiveBacktracker";
 
 import "./AlgoVisualizer.css";
 
-const START_NODE_ROW = 10;
-const START_NODE_COL = 15;
-const FINISH_NODE_ROW = 10;
-const FINISH_NODE_COL = 35;
+const START_NODE_ROW = 2;
+const START_NODE_COL = 2;
+const FINISH_NODE_ROW = 18;
+const FINISH_NODE_COL = 46;
 
 export default class AlgoVisualizer extends Component {
   constructor() {
@@ -21,6 +22,13 @@ export default class AlgoVisualizer extends Component {
   componentDidMount() {
     const grid = getInitialGrid();
     this.setState({ grid });
+    console.log(grid);
+  }
+
+  handleGenerateMaze() {
+    console.warn("at generate maze");
+    const borderedGrid = recursiveBacktracker(this.state.grid);
+    this.setState({ grid: borderedGrid });
   }
 
   handleMouseDown(row, col) {
@@ -81,6 +89,7 @@ export default class AlgoVisualizer extends Component {
         <button onClick={() => this.visualizeDijkstra()}>
           Visualize Dijkstra's Algorithm
         </button>
+        <button onClick={() => this.handleGenerateMaze()}>Generate Maze</button>
         <div className="grid">
           {grid.map((row, rowIdx) => {
             return (
@@ -112,17 +121,20 @@ export default class AlgoVisualizer extends Component {
     );
   }
 }
+
+// Initialize a 21 x 49 grid
 const getInitialGrid = () => {
   const grid = [];
-  for (let row = 0; row < 20; row++) {
+  for (let row = 0; row < 21; row++) {
     const currentRow = [];
-    for (let col = 0; col < 50; col++) {
+    for (let col = 0; col < 49; col++) {
       currentRow.push(createNode(col, row));
     }
     grid.push(currentRow);
   }
   return grid;
 };
+
 const createNode = (col, row) => {
   return {
     col,
@@ -135,6 +147,7 @@ const createNode = (col, row) => {
     previousNode: null
   };
 };
+
 const getNewGridWithWallToggled = (grid, row, col) => {
   const newGrid = grid.slice();
   const node = newGrid[row][col];
