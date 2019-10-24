@@ -1,6 +1,7 @@
 export const recursiveBacktracker = grid => {
   const borderedGrid = initBorders(grid);
-  return borderedGrid;
+  const randomizedMazeGrid = depthFirstSearch(borderedGrid);
+  return randomizedMazeGrid;
 };
 
 const initBorders = grid => {
@@ -17,14 +18,134 @@ const initBorders = grid => {
       }
     }
   }
-  console.log(borderedGrid);
+
   return borderedGrid;
 };
 
 const isBorder = (row, col) => {
-  if (row % 4 === 0 || col % 4 === 0) {
-    console.log("is border!");
-    return true;
+  return row % 4 === 0 || col % 4 === 0;
+};
+
+const depthFirstSearch = borderedGrid => {
+  var currentNode = borderedGrid[2][2];
+  var visitedNodes = [];
+  var openingNodes = [];
+  visitedNodes.push(currentNode);
+  for (var i = 0; i < 12; i++) {
+    // Choose randomly one of the unvisited neighbours
+    var nextNode = checkUnvisitedNeighbors(
+      currentNode,
+      borderedGrid,
+      visitedNodes
+    );
+    if (nextNode) {
+      // Make the chosen cell the current cell and mark it as visited
+      declareOpenings(borderedGrid, currentNode, nextNode, openingNodes); // Add "openings" to openingNodes
+      visitedNodes.push(nextNode);
+      currentNode = nextNode;
+    }
   }
-  return false;
+
+  // After everything is done, iterate through the entire grid
+  // and toggle all instances of nodes that are opening nodes
+
+  // Return grid with openings
+  return generateMazeOpenings(borderedGrid, openingNodes);
+};
+
+const checkUnvisitedNeighbors = (currentNode, borderedGrid, visitedNodes) => {
+  var unvisitedNeighbors = [];
+  if (currentNode.row >= 6) {
+    var top = borderedGrid[currentNode.row - 4][currentNode.col];
+  }
+  if (currentNode.col <= 40) {
+    var right = borderedGrid[currentNode.row][currentNode.col + 4];
+  }
+  if (currentNode.row <= 12) {
+    var bottom = borderedGrid[currentNode.row + 4][currentNode.col];
+  }
+  if (currentNode.col >= 6) {
+    var left = borderedGrid[currentNode.row][currentNode.col - 4];
+  }
+  if (top && !visitedNodes.includes(top)) {
+    unvisitedNeighbors.push(top);
+  }
+  if (right && !visitedNodes.includes(right)) {
+    unvisitedNeighbors.push(right);
+  }
+  if (bottom && !visitedNodes.includes(bottom)) {
+    unvisitedNeighbors.push(bottom);
+  }
+  if (left && !visitedNodes.includes(left)) {
+    unvisitedNeighbors.push(left);
+  }
+
+  return selectRandomNeighbor(unvisitedNeighbors);
+};
+
+const selectRandomNeighbor = unvisitedNeighbors => {
+  if (unvisitedNeighbors.length > 0) {
+    var i = Math.floor(
+      Math.random() * Math.floor(unvisitedNeighbors.length + 1)
+    );
+
+    return unvisitedNeighbors[i];
+  } else {
+    return undefined;
+  }
+};
+
+const declareOpenings = (borderedGrid, currentNode, nextNode, openingNodes) => {
+  var classifyNeighbor;
+  if (nextNode.row - currentNode.row === -4) {
+    classifyNeighbor = "top";
+  } else if (nextNode.col - currentNode.col === 4) {
+    classifyNeighbor = "right";
+  } else if (nextNode.row - currentNode.row === 4) {
+    classifyNeighbor = "bottom";
+  } else {
+    classifyNeighbor = "left";
+  }
+  switch (classifyNeighbor) {
+    case "top":
+      openingNodes.push(borderedGrid[currentNode.row - 2][currentNode.col - 1]);
+      openingNodes.push(borderedGrid[currentNode.row - 2][currentNode.col]);
+      openingNodes.push(borderedGrid[currentNode.row - 2][currentNode.col + 1]);
+      break;
+    case "right":
+      openingNodes.push(borderedGrid[currentNode.row - 1][currentNode.col + 2]);
+      openingNodes.push(borderedGrid[currentNode.row][currentNode.col + 2]);
+      openingNodes.push(borderedGrid[currentNode.row + 1][currentNode.col + 2]);
+      break;
+    case "bottom":
+      openingNodes.push(borderedGrid[currentNode.row + 2][currentNode.col - 1]);
+      openingNodes.push(borderedGrid[currentNode.row + 2][currentNode.col]);
+      openingNodes.push(borderedGrid[currentNode.row + 2][currentNode.col + 1]);
+      break;
+    case "left":
+      openingNodes.push(borderedGrid[currentNode.row - 1][currentNode.col - 2]);
+      openingNodes.push(borderedGrid[currentNode.row][currentNode.col - 2]);
+      openingNodes.push(borderedGrid[currentNode.row + 1][currentNode.col - 2]);
+      break;
+    default:
+      break;
+  }
+};
+
+const generateMazeOpenings = (borderedGrid, openingNodes) => {
+  const randomizedMazeGrid = borderedGrid.slice();
+  for (let row = 0; row < 21; row++) {
+    for (let col = 0; col < 49; col++) {
+      const node = borderedGrid[row][col];
+      if (openingNodes.includes(node)) {
+        const newNode = {
+          ...node,
+          isWall: !node.isWall
+        };
+        borderedGrid[row][col] = newNode;
+      }
+    }
+  }
+
+  return randomizedMazeGrid;
 };

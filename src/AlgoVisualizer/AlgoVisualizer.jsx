@@ -25,6 +25,11 @@ export default class AlgoVisualizer extends Component {
     console.log(grid);
   }
 
+  handleClearMaze() {
+    const resetGrid = getInitialGrid();
+    this.setState({ grid: resetGrid });
+  }
+
   handleGenerateMaze() {
     console.warn("at generate maze");
     const borderedGrid = recursiveBacktracker(this.state.grid);
@@ -86,36 +91,48 @@ export default class AlgoVisualizer extends Component {
 
     return (
       <>
-        <button onClick={() => this.visualizeDijkstra()}>
-          Visualize Dijkstra's Algorithm
-        </button>
-        <button onClick={() => this.handleGenerateMaze()}>Generate Maze</button>
-        <div className="grid">
-          {grid.map((row, rowIdx) => {
-            return (
-              <div key={rowIdx}>
-                {row.map((node, nodeIdx) => {
-                  const { row, col, isFinish, isStart, isWall } = node;
-                  return (
-                    <Node
-                      key={nodeIdx}
-                      col={col}
-                      isFinish={isFinish}
-                      isStart={isStart}
-                      isWall={isWall}
-                      mouseIsPressed={mouseIsPressed}
-                      onMouseDown={(row, col) => this.handleMouseDown(row, col)}
-                      onMouseEnter={(row, col) =>
-                        this.handleMouseEnter(row, col)
-                      }
-                      onMouseUp={() => this.handleMouseUp()}
-                      row={row}
-                    ></Node>
-                  );
-                })}
-              </div>
-            );
-          })}
+        <div>
+          <div>
+            <h1>Pathfinding Algorithm Visualizer</h1>
+          </div>
+          <div>
+            <button onClick={() => this.visualizeDijkstra()}>
+              Visualize Dijkstra's Algorithm
+            </button>
+            <button onClick={() => this.handleGenerateMaze()}>
+              Generate Maze
+            </button>
+            <button onClick={() => this.handleClearMaze()}>Clear Maze</button>
+          </div>
+          <div className="grid">
+            {grid.map((row, rowIdx) => {
+              return (
+                <div key={rowIdx}>
+                  {row.map((node, nodeIdx) => {
+                    const { row, col, isFinish, isStart, isWall } = node;
+                    return (
+                      <Node
+                        key={nodeIdx}
+                        col={col}
+                        isFinish={isFinish}
+                        isStart={isStart}
+                        isWall={isWall}
+                        mouseIsPressed={mouseIsPressed}
+                        onMouseDown={(row, col) =>
+                          this.handleMouseDown(row, col)
+                        }
+                        onMouseEnter={(row, col) =>
+                          this.handleMouseEnter(row, col)
+                        }
+                        onMouseUp={() => this.handleMouseUp()}
+                        row={row}
+                      ></Node>
+                    );
+                  })}
+                </div>
+              );
+            })}
+          </div>
         </div>
       </>
     );
