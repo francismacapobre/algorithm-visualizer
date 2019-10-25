@@ -30,8 +30,9 @@ const depthFirstSearch = borderedGrid => {
   var currentNode = borderedGrid[2][2];
   var visitedNodes = [];
   var openingNodes = [];
+  var nodesStack = [];
   visitedNodes.push(currentNode);
-  for (var i = 0; i < 12; i++) {
+  while (!!currentNode) {
     // Choose randomly one of the unvisited neighbours
     var nextNode = checkUnvisitedNeighbors(
       currentNode,
@@ -39,10 +40,13 @@ const depthFirstSearch = borderedGrid => {
       visitedNodes
     );
     if (nextNode) {
+      visitedNodes.push(nextNode);
       // Make the chosen cell the current cell and mark it as visited
       declareOpenings(borderedGrid, currentNode, nextNode, openingNodes); // Add "openings" to openingNodes
-      visitedNodes.push(nextNode);
+      nodesStack.push(currentNode);
       currentNode = nextNode;
+    } else {
+      currentNode = nodesStack.pop();
     }
   }
 
@@ -58,10 +62,10 @@ const checkUnvisitedNeighbors = (currentNode, borderedGrid, visitedNodes) => {
   if (currentNode.row >= 6) {
     var top = borderedGrid[currentNode.row - 4][currentNode.col];
   }
-  if (currentNode.col <= 40) {
+  if (currentNode.col <= 42) {
     var right = borderedGrid[currentNode.row][currentNode.col + 4];
   }
-  if (currentNode.row <= 12) {
+  if (currentNode.row <= 14) {
     var bottom = borderedGrid[currentNode.row + 4][currentNode.col];
   }
   if (currentNode.col >= 6) {
@@ -80,15 +84,14 @@ const checkUnvisitedNeighbors = (currentNode, borderedGrid, visitedNodes) => {
     unvisitedNeighbors.push(left);
   }
 
-  return selectRandomNeighbor(unvisitedNeighbors);
+  // returns undefined if there are no unvisited neighbors
+  var randomNeighbor = selectRandomNeighbor(unvisitedNeighbors);
+  return randomNeighbor;
 };
 
 const selectRandomNeighbor = unvisitedNeighbors => {
   if (unvisitedNeighbors.length > 0) {
-    var i = Math.floor(
-      Math.random() * Math.floor(unvisitedNeighbors.length + 1)
-    );
-
+    var i = Math.floor(Math.random() * Math.floor(unvisitedNeighbors.length));
     return unvisitedNeighbors[i];
   } else {
     return undefined;
