@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Node from "./Node/Node";
+import { astar, getNodesInShortestPathOrderAStar } from "../algorithms/aStar";
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
 import { recursiveBacktracker } from "../mazeAlgorithms/recursiveBacktracker";
 
@@ -67,6 +68,22 @@ export default class AlgoVisualizer extends Component {
     }
   }
 
+  animateAStar(visitedNodesInOrder, nodesInShortestPathOrder) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node node-visited";
+      }, 10 * i);
+    }
+  }
+
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -86,6 +103,17 @@ export default class AlgoVisualizer extends Component {
     this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
+  visualizeAStar() {
+    const { grid } = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = astar(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(
+      finishNode
+    );
+    this.animateAStar(visitedNodesInOrder, nodesInShortestPathOrder);
+  }
+
   render() {
     const { grid, mouseIsPressed } = this.state;
 
@@ -98,6 +126,9 @@ export default class AlgoVisualizer extends Component {
           <div>
             <button onClick={() => this.visualizeDijkstra()}>
               Visualize Dijkstra's Algorithm
+            </button>
+            <button onClick={() => this.visualizeAStar()}>
+              Visualize A* Search Algorithm
             </button>
             <button onClick={() => this.handleGenerateMaze()}>
               Generate Maze
@@ -159,6 +190,9 @@ const createNode = (col, row) => {
     isStart: row === START_NODE_ROW && col === START_NODE_COL,
     isFinish: row === FINISH_NODE_ROW && col === FINISH_NODE_COL,
     distance: Infinity,
+    gcost: Infinity,
+    hcost: Infinity,
+    fcost: Infinity,
     isVisited: false,
     isWall: false,
     previousNode: null
