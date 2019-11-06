@@ -1,7 +1,24 @@
 .main {
-  width: 100%;
-  overflow: hidden;
-  background-color: green;
+  display: flex;
+  flex-direction: column;
+}
+
+.header-div {
+  background-color: #1b2432;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.header {
+  color: #e6e6e6;
+}
+
+.sub-header {
+  color: white;
+}
+
+.content {
+  display: flex;
 }
 
 .buttonContainer {
@@ -10,11 +27,21 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: orange;
+  background-color: #2ab7ca;
+  flex-grow: 1;
+  padding-left: 20px;
+  padding-right: 20px;
 }
 
 .grid {
-  width: 70%;
-  float: left;
-  background-color: fuchsia;
+  width: 60%;
+  float: right;
+  padding: 50px;
+  padding-top: 50px;
+  background-color: #628395;
+}
+
+.footer {
+  background-color: #1b2432;
+  flex-grow: 1;
 }

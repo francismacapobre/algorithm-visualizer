@@ -3,7 +3,6 @@ import Node from "./Node/Node";
 import { astar, getNodesInShortestPathOrderAStar } from "../algorithms/aStar";
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
 import { recursiveBacktracker } from "../mazeAlgorithms/recursiveBacktracker";
-
 import "./AlgoVisualizer.css";
 
 const START_NODE_ROW = 2;
@@ -118,22 +117,38 @@ export default class AlgoVisualizer extends Component {
     const { grid, mouseIsPressed } = this.state;
 
     return (
-      <>
-        <div className="main">
-          <div>
-            <h1>Pathfinding Algorithm Visualizer</h1>
-          </div>
+      <div className="main">
+        <div className="header-div">
+          <h1 className="header">Pathfinding Algorithm Visualizer</h1>
+        </div>
+        <div className="content">
           <div className="buttonContainer">
-            <button onClick={() => this.visualizeDijkstra()}>
-              Visualize Dijkstra's Algorithm
-            </button>
-            <button onClick={() => this.visualizeAStar()}>
-              Visualize A* Search Algorithm
-            </button>
+            <h5 className="sub-header">
+              Generate a maze using a depth-first-search recursive backtracker
+              (or draw your own)
+            </h5>
             <button onClick={() => this.handleGenerateMaze()}>
               Generate Maze
             </button>
             <button onClick={() => this.handleClearMaze()}>Clear Maze</button>
+            <h5 className="sub-header">
+              Select a pathfinding algorithm to visualize
+            </h5>
+            <button onClick={() => this.visualizeDijkstra()}>
+              Dijkstra's Algorithm
+            </button>
+            <button onClick={() => this.visualizeAStar()}>
+              A* Search Algorithm
+            </button>
+            <button onClick={() => this.visualizeAStar()}>
+              Depth-first Search Algorithm
+            </button>
+            <button onClick={() => this.visualizeAStar()}>
+              Breadth-first Search Algorithm
+            </button>
+            <button onClick={() => this.visualizeAStar()}>
+              Reset Visualizer
+            </button>
           </div>
           <div className="grid">
             {grid.map((row, rowIdx) => {
@@ -165,7 +180,10 @@ export default class AlgoVisualizer extends Component {
             })}
           </div>
         </div>
-      </>
+        <div className="footer">
+          <h5 className="header">Built by Francis Macapobre</h5>
+        </div>
+      </div>
     );
   }
 }
