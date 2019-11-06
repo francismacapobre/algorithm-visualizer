@@ -119,11 +119,11 @@ export default class AlgoVisualizer extends Component {
 
     return (
       <>
-        <div>
+        <div className="main">
           <div>
             <h1>Pathfinding Algorithm Visualizer</h1>
           </div>
-          <div>
+          <div className="buttonContainer">
             <button onClick={() => this.visualizeDijkstra()}>
               Visualize Dijkstra's Algorithm
             </button>
