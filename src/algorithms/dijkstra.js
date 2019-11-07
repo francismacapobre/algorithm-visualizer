@@ -6,7 +6,6 @@ export function dijkstra(grid, startNode, finishNode) {
   const visitedNodesInOrder = [];
   startNode.distance = 0;
   const unvisitedNodes = getAllNodes(grid);
-  console.warn("array of unvisited nodes: ", unvisitedNodes);
   while (!!unvisitedNodes.length) {
     sortNodesByDistance(unvisitedNodes); // every time this is called the distance will be updated because we called update unvisited neighbors (the neighbors will be first)
     const closestNode = unvisitedNodes.shift(); // this will be the closest node since they're sorted
@@ -24,7 +23,6 @@ export function dijkstra(grid, startNode, finishNode) {
 
 function sortNodesByDistance(unvisitedNodes) {
   unvisitedNodes.sort((nodeA, nodeB) => nodeA.distance - nodeB.distance);
-  console.warn("sorted unvisited nodes", unvisitedNodes);
 }
 
 function updateUnvisitedNeighbors(node, grid) {
@@ -32,8 +30,6 @@ function updateUnvisitedNeighbors(node, grid) {
   for (const neighbor of unvisitedNeighbors) {
     neighbor.distance = node.distance + 1; // nodes distance will be 0 in the beginning and I assign + 1 to its neighbors
     neighbor.previousNode = node; // allows for traversal backwards
-    console.warn("node distance", node.distance);
-    console.warn("neighbor distance", neighbor.distance);
   }
 }
 

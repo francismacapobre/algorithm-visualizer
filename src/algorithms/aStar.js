@@ -66,13 +66,11 @@ function getAllNodes(grid) {
 // Backtracks from the finishNode to find the shortest path.
 // Only works when called *after* the astar method above.
 export function getNodesInShortestPathOrderAStar(finishNode) {
-  console.warn("inside get nodes in shortest path order");
   const nodesInShortestPathOrder = [];
   let currentNode = finishNode;
   while (currentNode !== null) {
     nodesInShortestPathOrder.unshift(currentNode);
     currentNode = currentNode.previousNode;
   }
-  console.warn("nodes in shortest path order", nodesInShortestPathOrder);
   return nodesInShortestPathOrder;
 }
