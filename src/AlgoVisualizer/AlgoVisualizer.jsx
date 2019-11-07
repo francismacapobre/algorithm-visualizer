@@ -22,7 +22,6 @@ export default class AlgoVisualizer extends Component {
   componentDidMount() {
     const grid = getInitialGrid();
     this.setState({ grid });
-    console.log(grid);
   }
 
   handleClearMaze() {
@@ -31,9 +30,13 @@ export default class AlgoVisualizer extends Component {
   }
 
   handleGenerateMaze() {
-    console.warn("at generate maze");
-    const borderedGrid = recursiveBacktracker(this.state.grid);
+    const resetGrid = getInitialGrid();
+    const borderedGrid = recursiveBacktracker(resetGrid);
     this.setState({ grid: borderedGrid });
+  }
+
+  handleReset() {
+    window.location.reload();
   }
 
   handleMouseDown(row, col) {
@@ -124,29 +127,50 @@ export default class AlgoVisualizer extends Component {
         <div className="content">
           <div className="buttonContainer">
             <h5 className="sub-header">
-              Generate a maze using a depth-first-search recursive backtracker
-              (or draw your own)
+              1) Generate a maze using a depth-first-search recursive
+              backtracker (or draw your own)
             </h5>
-            <button onClick={() => this.handleGenerateMaze()}>
+            <button
+              className="maze-button"
+              onClick={() => this.handleGenerateMaze()}
+            >
               Generate Maze
             </button>
-            <button onClick={() => this.handleClearMaze()}>Clear Maze</button>
+            <button
+              className="reset-button"
+              onClick={() => this.handleClearMaze()}
+            >
+              Clear Maze
+            </button>
             <h5 className="sub-header">
-              Select a pathfinding algorithm to visualize
+              2) Select a pathfinding algorithm to visualize
             </h5>
-            <button onClick={() => this.visualizeDijkstra()}>
+            <button
+              className="algo-button"
+              onClick={() => this.visualizeDijkstra()}
+            >
               Dijkstra's Algorithm
             </button>
-            <button onClick={() => this.visualizeAStar()}>
+            <button
+              className="algo-button"
+              onClick={() => this.visualizeAStar()}
+            >
               A* Search Algorithm
             </button>
-            <button onClick={() => this.visualizeAStar()}>
+            <button
+              className="algo-button"
+              onClick={() => alert("Coming soon!")}
+            >
               Depth-first Search Algorithm
             </button>
-            <button onClick={() => this.visualizeAStar()}>
+            <button
+              className="algo-button"
+              onClick={() => alert("Coming soon!")}
+            >
               Breadth-first Search Algorithm
             </button>
-            <button onClick={() => this.visualizeAStar()}>
+            <h5 className="sub-header">3) Reset the visualizer</h5>
+            <button className="reset-button" onClick={() => this.handleReset()}>
               Reset Visualizer
             </button>
           </div>

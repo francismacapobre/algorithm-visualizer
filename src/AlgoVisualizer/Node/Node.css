@@ -6,11 +6,11 @@
 }
 
 .node-finish {
-  background-color: red;
+  background-color: #05f140;
 }
 
 .node-start {
-  background-color: green;
+  background-color: red;
 }
 
 .node-visited {
@@ -47,6 +47,6 @@
 
 @keyframes shortestPath {
   100% {
-    background-color: rgb(255, 254, 106);
+    background-color: #e6e6e6;
   }
 }
