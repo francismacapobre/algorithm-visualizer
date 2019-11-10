@@ -4,6 +4,12 @@ import { astar, getNodesInShortestPathOrderAStar } from "../algorithms/aStar";
 import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
 import { recursiveBacktracker } from "../mazeAlgorithms/recursiveBacktracker";
 import "./AlgoVisualizer.css";
+import { recursiveBacktrackerNarrow } from "../mazeAlgorithms/recursiveBacktrackerNarrow";
+import {
+  breadthFirstSearch,
+  getNodesInShortestPathOrderBFS
+} from "../algorithms/breadthFirstSearch";
+import { getNodesInShortestPathOrderDFS } from "../algorithms/depthFirstSearch";
 
 const START_NODE_ROW = 2;
 const START_NODE_COL = 2;
@@ -32,6 +38,12 @@ export default class AlgoVisualizer extends Component {
   handleGenerateMaze() {
     const resetGrid = getInitialGrid();
     const borderedGrid = recursiveBacktracker(resetGrid);
+    this.setState({ grid: borderedGrid });
+  }
+
+  handleGenerateMazeNarrow() {
+    const resetGrid = getInitialGrid();
+    const borderedGrid = recursiveBacktrackerNarrow(resetGrid);
     this.setState({ grid: borderedGrid });
   }
 
@@ -86,6 +98,38 @@ export default class AlgoVisualizer extends Component {
     }
   }
 
+  animateBreadthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node node-visited";
+      }, 10 * i);
+    }
+  }
+
+  animateDepthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder) {
+    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
+      if (i === visitedNodesInOrder.length) {
+        setTimeout(() => {
+          this.animateShortestPath(nodesInShortestPathOrder);
+        }, 10 * i);
+        return;
+      }
+      setTimeout(() => {
+        const node = visitedNodesInOrder[i];
+        document.getElementById(`node-${node.row}-${node.col}`).className =
+          "node node-visited";
+      }, 10 * i);
+    }
+  }
+
   animateShortestPath(nodesInShortestPathOrder) {
     for (let i = 0; i < nodesInShortestPathOrder.length; i++) {
       setTimeout(() => {
@@ -94,6 +138,27 @@ export default class AlgoVisualizer extends Component {
           "node node-shortest-path";
       }, 50 * i);
     }
+  }
+
+  visualizeBreadthFirstSearch() {
+    const { grid } = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode);
+    this.animateBreadthFirstSearch(
+      visitedNodesInOrder,
+      nodesInShortestPathOrder
+    );
+  }
+
+  visualizeDepthFirstSearch() {
+    const { grid } = this.state;
+    const startNode = grid[START_NODE_ROW][START_NODE_COL];
+    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
+    const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+    const nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode);
+    this.animateDepthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   visualizeDijkstra() {
@@ -134,7 +199,13 @@ export default class AlgoVisualizer extends Component {
               className="maze-button"
               onClick={() => this.handleGenerateMaze()}
             >
-              Generate Maze
+              Generate Wide Maze
+            </button>
+            <button
+              className="maze-button"
+              onClick={() => this.handleGenerateMazeNarrow()}
+            >
+              Generate Narrow Maze
             </button>
             <button
               className="reset-button"
@@ -159,13 +230,13 @@ export default class AlgoVisualizer extends Component {
             </button>
             <button
               className="algo-button"
-              onClick={() => alert("Coming soon!")}
+              onClick={() => this.visualizeDepthFirstSearch()}
             >
               Depth-first Search Algorithm
             </button>
             <button
               className="algo-button"
-              onClick={() => alert("Coming soon!")}
+              onClick={() => this.visualizeBreadthFirstSearch()}
             >
               Breadth-first Search Algorithm
             </button>
