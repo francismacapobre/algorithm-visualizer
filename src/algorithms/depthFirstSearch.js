@@ -7,7 +7,7 @@ export function depthFirstSearch(grid, startNode, finishNode) {
   currentNode.isVisited = true;
   while (!!currentNode) {
     if (currentNode === finishNode) return visitedNodesInOrder;
-    var nextNode = getUnvisitedNeighbors(currentNode, grid);
+    var nextNode = getNextNode(currentNode, grid);
     if (!!nextNode) {
       nextNode.previousNode = currentNode;
       currentNode = nextNode;
@@ -15,13 +15,13 @@ export function depthFirstSearch(grid, startNode, finishNode) {
       visitedNodesInOrder.push(currentNode);
       currentNode.isVisited = true;
     } else {
-      currentNode = nodesStack.shift();
+      currentNode = nodesStack.pop();
     }
   }
   return visitedNodesInOrder;
 }
 
-const getUnvisitedNeighbors = (node, grid) => {
+const getNextNode = (node, grid) => {
   var neighbors = [];
   const { col, row } = node;
   // Ensure nodes are within grid
@@ -35,14 +35,13 @@ const getUnvisitedNeighbors = (node, grid) => {
   );
 
   // Returns undefined if there are no unvisited neighbors
-  var randomNeighbor = selectRandomNeighbor(unvisitedNeighbors);
-  return randomNeighbor;
+  var nextNode = selectNeighbor(unvisitedNeighbors);
+  return nextNode;
 };
 
-const selectRandomNeighbor = unvisitedNeighbors => {
+const selectNeighbor = unvisitedNeighbors => {
   if (unvisitedNeighbors.length > 0) {
-    var i = Math.floor(Math.random() * Math.floor(unvisitedNeighbors.length));
-    return unvisitedNeighbors[i];
+    return unvisitedNeighbors.pop();
   } else {
     return undefined;
   }

@@ -9,7 +9,10 @@ import {
   breadthFirstSearch,
   getNodesInShortestPathOrderBFS
 } from "../algorithms/breadthFirstSearch";
-import { getNodesInShortestPathOrderDFS } from "../algorithms/depthFirstSearch";
+import {
+  getNodesInShortestPathOrderDFS,
+  depthFirstSearch
+} from "../algorithms/depthFirstSearch";
 
 const START_NODE_ROW = 2;
 const START_NODE_COL = 2;
@@ -66,55 +69,7 @@ export default class AlgoVisualizer extends Component {
     this.setState({ mouseIsPressed: false });
   }
 
-  animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder) {
-    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      if (i === visitedNodesInOrder.length) {
-        setTimeout(() => {
-          this.animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
-        return;
-      }
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node node-visited";
-      }, 10 * i);
-    }
-  }
-
-  animateAStar(visitedNodesInOrder, nodesInShortestPathOrder) {
-    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      if (i === visitedNodesInOrder.length) {
-        setTimeout(() => {
-          this.animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
-        return;
-      }
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node node-visited";
-      }, 10 * i);
-    }
-  }
-
-  animateBreadthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder) {
-    for (let i = 0; i <= visitedNodesInOrder.length; i++) {
-      if (i === visitedNodesInOrder.length) {
-        setTimeout(() => {
-          this.animateShortestPath(nodesInShortestPathOrder);
-        }, 10 * i);
-        return;
-      }
-      setTimeout(() => {
-        const node = visitedNodesInOrder[i];
-        document.getElementById(`node-${node.row}-${node.col}`).className =
-          "node node-visited";
-      }, 10 * i);
-    }
-  }
-
-  animateDepthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder) {
+  animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder) {
     for (let i = 0; i <= visitedNodesInOrder.length; i++) {
       if (i === visitedNodesInOrder.length) {
         setTimeout(() => {
@@ -146,19 +101,16 @@ export default class AlgoVisualizer extends Component {
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode);
-    this.animateBreadthFirstSearch(
-      visitedNodesInOrder,
-      nodesInShortestPathOrder
-    );
+    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   visualizeDepthFirstSearch() {
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+    const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode);
-    this.animateDepthFirstSearch(visitedNodesInOrder, nodesInShortestPathOrder);
+    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   visualizeDijkstra() {
@@ -167,7 +119,7 @@ export default class AlgoVisualizer extends Component {
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
     const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    this.animateDijkstra(visitedNodesInOrder, nodesInShortestPathOrder);
+    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   visualizeAStar() {
@@ -178,7 +130,7 @@ export default class AlgoVisualizer extends Component {
     const nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(
       finishNode
     );
-    this.animateAStar(visitedNodesInOrder, nodesInShortestPathOrder);
+    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   render() {
