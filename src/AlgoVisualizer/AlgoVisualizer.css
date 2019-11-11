@@ -4,7 +4,7 @@
 }
 
 .header-div {
-  background-color: #1b2432;
+  background-color: #191716;
   padding-top: 15px;
   padding-bottom: 15px;
 }
@@ -14,54 +14,60 @@
 }
 
 .sub-header {
-  color: white;
+  color: black;
 }
 
 .content {
+  background-color: #eef1ef;
   display: flex;
 }
 
-.buttonContainer {
+.grid {
+  margin: 30px;
+  padding: 20px;
+  border-radius: 8px;
+  background-color: #a9b4c2;
+}
+
+.button-container {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: #2ab7ca;
+  border-color: green;
+  border-radius: 15px 50px 30px;
+  justify-content: center;
   flex: 1;
+  background-color: #a9b4c2;
+  margin-top: 100px;
+  margin-bottom: 100px;
+  margin-left: 20px;
   padding-left: 20px;
   padding-right: 20px;
 }
 
-.maze-button {
-  background-color: #355691;
+.action-button {
+  background-color: #191716;
   border: none;
   border-radius: 10px;
-  width: 180px;
-  height: 30px;
-  color: white;
-  margin-bottom: 10px;
-}
-
-.algo-button {
-  background-color: #355691;
-  border: none;
-  border-radius: 10px;
-  width: 180px;
+  width: 220px;
   height: 30px;
   color: white;
   margin-bottom: 10px;
 }
 
 .reset-button {
-  background-color: #fb3640;
+  background-color: red;
   border-radius: 5px;
   border: none;
   color: white;
   width: 100px;
+  margin-bottom: 10px;
 }
 
-.grid {
-  padding: 50px;
-  flex: 2.5;
-  padding-top: 50px;
-  background-color: #628395;
+.continue-button {
+  background-color: #05f140;
+  border-radius: 5px;
+  border: none;
+  color: white;
+  width: 100px;
 }

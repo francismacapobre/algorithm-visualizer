@@ -26,12 +26,12 @@
 
 @keyframes visitedAnimation {
   100% {
-    background-color: rgba(0, 190, 218, 0.75);
+    background-color: #d7fff1;
   }
 }
 
 .node-wall {
-  background-color: rgb(12, 53, 71);
+  background-color: #191716;
 }
 
 .node-shortest-path {
@@ -47,6 +47,6 @@
 
 @keyframes shortestPath {
   100% {
-    background-color: #e6e6e6;
+    background-color: #eef1ef;
   }
 }

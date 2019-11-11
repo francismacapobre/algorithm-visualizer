@@ -46,15 +46,3 @@ const selectNeighbor = unvisitedNeighbors => {
     return undefined;
   }
 };
-
-// Backtracks from the finishNode to find the shortest path.
-// Only works when called *after* the BFS method above.
-export function getNodesInShortestPathOrderDFS(finishNode) {
-  const nodesInShortestPathOrder = [];
-  let currentNode = finishNode;
-  while (currentNode !== null) {
-    nodesInShortestPathOrder.unshift(currentNode);
-    currentNode = currentNode.previousNode;
-  }
-  return nodesInShortestPathOrder;
-}

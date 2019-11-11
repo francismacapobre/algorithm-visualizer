@@ -33,15 +33,3 @@ const getUnvisitedNeighbors = (node, grid) => {
   // Filter out visited and wall neighbors
   return neighbors.filter(neighbor => !neighbor.isVisited && !neighbor.isWall);
 };
-
-// Backtracks from the finishNode to find the shortest path.
-// Only works when called *after* the BFS method above.
-export function getNodesInShortestPathOrderBFS(finishNode) {
-  const nodesInShortestPathOrder = [];
-  let currentNode = finishNode;
-  while (currentNode !== null) {
-    nodesInShortestPathOrder.unshift(currentNode);
-    currentNode = currentNode.previousNode;
-  }
-  return nodesInShortestPathOrder;
-}

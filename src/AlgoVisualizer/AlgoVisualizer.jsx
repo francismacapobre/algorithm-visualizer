@@ -1,18 +1,15 @@
 import React, { Component } from "react";
 import Node from "./Node/Node";
-import { astar, getNodesInShortestPathOrderAStar } from "../algorithms/aStar";
-import { dijkstra, getNodesInShortestPathOrder } from "../algorithms/dijkstra";
+import { astar } from "../algorithms/aStar";
+import { dijkstra } from "../algorithms/dijkstra";
 import { recursiveBacktracker } from "../mazeAlgorithms/recursiveBacktracker";
-import "./AlgoVisualizer.css";
 import { recursiveBacktrackerNarrow } from "../mazeAlgorithms/recursiveBacktrackerNarrow";
-import {
-  breadthFirstSearch,
-  getNodesInShortestPathOrderBFS
-} from "../algorithms/breadthFirstSearch";
-import {
-  getNodesInShortestPathOrderDFS,
-  depthFirstSearch
-} from "../algorithms/depthFirstSearch";
+import { breadthFirstSearch } from "../algorithms/breadthFirstSearch";
+import { depthFirstSearch } from "../algorithms/depthFirstSearch";
+import { getNodesInShortestPathOrder } from "./utilityFunctions";
+import "./AlgoVisualizer.css";
+import MazeGenerator from "./components/MazeGenerator";
+import AlgoSelection from "./components/AlgoSelection";
 
 const START_NODE_ROW = 2;
 const START_NODE_COL = 2;
@@ -24,7 +21,8 @@ export default class AlgoVisualizer extends Component {
     super();
     this.state = {
       grid: [],
-      mouseIsPressed: false
+      mouseIsPressed: false,
+      phase: 0
     };
   }
 
@@ -36,6 +34,11 @@ export default class AlgoVisualizer extends Component {
   handleClearMaze() {
     const resetGrid = getInitialGrid();
     this.setState({ grid: resetGrid });
+  }
+
+  handleContinue() {
+    var newPhase = this.state.phase + 1;
+    this.setState({ phase: newPhase });
   }
 
   handleGenerateMaze() {
@@ -91,50 +94,70 @@ export default class AlgoVisualizer extends Component {
         const node = nodesInShortestPathOrder[i];
         document.getElementById(`node-${node.row}-${node.col}`).className =
           "node node-shortest-path";
-      }, 50 * i);
+      }, 30 * i);
     }
   }
 
-  visualizeBreadthFirstSearch() {
+  visualizeAlgo(algo) {
+    this.handleContinue();
     const { grid } = this.state;
     const startNode = grid[START_NODE_ROW][START_NODE_COL];
     const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrderBFS(finishNode);
-    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
-  }
-
-  visualizeDepthFirstSearch() {
-    const { grid } = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrderDFS(finishNode);
-    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
-  }
-
-  visualizeDijkstra() {
-    const { grid } = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+    var visitedNodesInOrder = [];
+    switch (algo) {
+      case "dijkstra":
+        visitedNodesInOrder = dijkstra(grid, startNode, finishNode);
+        break;
+      case "astar":
+        visitedNodesInOrder = astar(grid, startNode, finishNode);
+        break;
+      case "bfs":
+        visitedNodesInOrder = breadthFirstSearch(grid, startNode, finishNode);
+        break;
+      case "dfs":
+        visitedNodesInOrder = depthFirstSearch(grid, startNode, finishNode);
+        break;
+    }
     const nodesInShortestPathOrder = getNodesInShortestPathOrder(finishNode);
-    this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
-  }
-
-  visualizeAStar() {
-    const { grid } = this.state;
-    const startNode = grid[START_NODE_ROW][START_NODE_COL];
-    const finishNode = grid[FINISH_NODE_ROW][FINISH_NODE_COL];
-    const visitedNodesInOrder = astar(grid, startNode, finishNode);
-    const nodesInShortestPathOrder = getNodesInShortestPathOrderAStar(
-      finishNode
-    );
     this.animateAlgo(visitedNodesInOrder, nodesInShortestPathOrder);
   }
 
   render() {
     const { grid, mouseIsPressed } = this.state;
+
+    var phaseView;
+    switch (this.state.phase) {
+      case 0:
+        phaseView = (
+          <MazeGenerator
+            handleGenerateMaze={this.handleGenerateMaze.bind(this)}
+            handleGenerateMazeNarrow={this.handleGenerateMazeNarrow.bind(this)}
+            handleClearMaze={this.handleClearMaze.bind(this)}
+            handleContinue={this.handleContinue.bind(this)}
+          />
+        );
+        break;
+      case 1:
+        phaseView = (
+          <AlgoSelection handleVisualize={algo => this.visualizeAlgo(algo)} />
+        );
+        break;
+      case 2:
+        phaseView = (
+          <>
+            <h5 className="sub-header">
+              3) Whenever you're ready, reset the visualizer.
+            </h5>
+            <button
+              className="action-button"
+              onClick={() => this.handleReset()}
+            >
+              Reset
+            </button>
+          </>
+        );
+        break;
+    }
 
     return (
       <div className="main">
@@ -142,61 +165,7 @@ export default class AlgoVisualizer extends Component {
           <h1 className="header">Pathfinding Algorithm Visualizer</h1>
         </div>
         <div className="content">
-          <div className="buttonContainer">
-            <h5 className="sub-header">
-              1) Generate a maze using a depth-first-search recursive
-              backtracker (or draw your own)
-            </h5>
-            <button
-              className="maze-button"
-              onClick={() => this.handleGenerateMaze()}
-            >
-              Generate Wide Maze
-            </button>
-            <button
-              className="maze-button"
-              onClick={() => this.handleGenerateMazeNarrow()}
-            >
-              Generate Narrow Maze
-            </button>
-            <button
-              className="reset-button"
-              onClick={() => this.handleClearMaze()}
-            >
-              Clear Maze
-            </button>
-            <h5 className="sub-header">
-              2) Select a pathfinding algorithm to visualize
-            </h5>
-            <button
-              className="algo-button"
-              onClick={() => this.visualizeDijkstra()}
-            >
-              Dijkstra's Algorithm
-            </button>
-            <button
-              className="algo-button"
-              onClick={() => this.visualizeAStar()}
-            >
-              A* Search Algorithm
-            </button>
-            <button
-              className="algo-button"
-              onClick={() => this.visualizeDepthFirstSearch()}
-            >
-              Depth-first Search Algorithm
-            </button>
-            <button
-              className="algo-button"
-              onClick={() => this.visualizeBreadthFirstSearch()}
-            >
-              Breadth-first Search Algorithm
-            </button>
-            <h5 className="sub-header">3) Reset the visualizer</h5>
-            <button className="reset-button" onClick={() => this.handleReset()}>
-              Reset Visualizer
-            </button>
-          </div>
+          <div className="button-container">{phaseView}</div>
           <div className="grid">
             {grid.map((row, rowIdx) => {
               return (
