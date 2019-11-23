@@ -162,7 +162,7 @@ export default class AlgoVisualizer extends Component {
     return (
       <div className="main">
         <div className="header-div">
-          <h1 className="header">Pathfinding Algorithm Visualizer</h1>
+          <h1 className="header">Graph Algorithm Visualizer</h1>
         </div>
         <div className="content">
           <div className="button-container">{phaseView}</div>
@@ -195,9 +195,6 @@ export default class AlgoVisualizer extends Component {
               );
             })}
           </div>
-        </div>
-        <div className="footer">
-          <h5 className="header">Built by Francis Macapobre</h5>
         </div>
       </div>
     );
