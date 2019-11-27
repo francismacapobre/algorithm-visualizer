@@ -5,8 +5,7 @@ export default class MazeGenerator extends Component {
     return (
       <>
         <h5 className="sub-header">
-          Generate a maze using a depth-first-search recursive backtracker (or
-          draw your own). Click "continue" when you see a maze that you like.
+          Generate (or draw) a maze until you find one you like.
         </h5>
         <button
           className="action-button"
