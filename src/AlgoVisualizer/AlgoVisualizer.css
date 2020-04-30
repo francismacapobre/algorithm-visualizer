@@ -4,9 +4,9 @@
 }
 
 .header-div {
-  background-color: #191716;
-  padding-top: 15px;
-  padding-bottom: 15px;
+  background-color: #0b0c10;
+  padding-top: 10px;
+  padding-bottom: 10px;
 }
 
 .header {
@@ -18,7 +18,7 @@
 }
 
 .content {
-  background-color: #eef1ef;
+  background-color: #1f2833;
   display: flex;
 }
 
@@ -26,7 +26,7 @@
   margin: 30px;
   padding: 20px;
   border-radius: 8px;
-  background-color: #a9b4c2;
+  background-color: #c5c6c7;
   flex: 2;
 }
 
@@ -38,7 +38,7 @@
   border-radius: 15px 50px 30px;
   justify-content: center;
   flex: 1;
-  background-color: #a9b4c2;
+  background-color: #c5c6c7;
   margin-top: 100px;
   margin-bottom: 100px;
   margin-left: 20px;

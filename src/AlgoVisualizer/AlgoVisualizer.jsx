@@ -22,7 +22,7 @@ export default class AlgoVisualizer extends Component {
     this.state = {
       grid: [],
       mouseIsPressed: false,
-      phase: 0
+      phase: 0,
     };
   }
 
@@ -139,7 +139,7 @@ export default class AlgoVisualizer extends Component {
         break;
       case 1:
         phaseView = (
-          <AlgoSelection handleVisualize={algo => this.visualizeAlgo(algo)} />
+          <AlgoSelection handleVisualize={(algo) => this.visualizeAlgo(algo)} />
         );
         break;
       case 2:
@@ -162,7 +162,7 @@ export default class AlgoVisualizer extends Component {
     return (
       <div className="main">
         <div className="header-div">
-          <h1 className="header">Graph Algorithm Visualizer</h1>
+          <h1 className="header">Maze Runner</h1>
         </div>
         <div className="content">
           <div className="button-container">{phaseView}</div>
@@ -201,7 +201,6 @@ export default class AlgoVisualizer extends Component {
   }
 }
 
-// Initialize a 21 x 49 grid
 const getInitialGrid = () => {
   const grid = [];
   for (let row = 0; row < 21; row++) {
@@ -226,7 +225,7 @@ const createNode = (col, row) => {
     fcost: Infinity,
     isVisited: false,
     isWall: false,
-    previousNode: null
+    previousNode: null,
   };
 };
 
@@ -235,7 +234,7 @@ const getNewGridWithWallToggled = (grid, row, col) => {
   const node = newGrid[row][col];
   const newNode = {
     ...node,
-    isWall: !node.isWall
+    isWall: !node.isWall,
   };
   newGrid[row][col] = newNode;
   return newGrid;

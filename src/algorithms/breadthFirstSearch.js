@@ -8,7 +8,6 @@ export function breadthFirstSearch(grid, startNode, finishNode) {
   while (!!currentNode) {
     if (currentNode === finishNode) return visitedNodesInOrder;
     var unvisitedNeighbors = getUnvisitedNeighbors(currentNode, grid);
-    // Explore all the adjacent nodes to current node
     while (unvisitedNeighbors.length > 0) {
       var nextNode = unvisitedNeighbors.shift();
       nextNode.previousNode = currentNode;
@@ -25,11 +24,11 @@ export function breadthFirstSearch(grid, startNode, finishNode) {
 const getUnvisitedNeighbors = (node, grid) => {
   var neighbors = [];
   const { col, row } = node;
-  // Ensure nodes are within grid
   if (row > 0) neighbors.push(grid[row - 1][col]);
   if (row < grid.length - 1) neighbors.push(grid[row + 1][col]);
   if (col > 0) neighbors.push(grid[row][col - 1]);
   if (col < grid[0].length - 1) neighbors.push(grid[row][col + 1]);
-  // Filter out visited and wall neighbors
-  return neighbors.filter(neighbor => !neighbor.isVisited && !neighbor.isWall);
+  return neighbors.filter(
+    (neighbor) => !neighbor.isVisited && !neighbor.isWall
+  );
 };
