@@ -10,6 +10,7 @@ import { getNodesInShortestPathOrder } from "./utilityFunctions";
 import "./AlgoVisualizer.css";
 import MazeGenerator from "./components/MazeGenerator";
 import AlgoSelection from "./components/AlgoSelection";
+import { initializeBorders } from "../mazeAlgorithms/initializeBorders";
 
 const START_NODE_ROW = 2;
 const START_NODE_COL = 2;
@@ -28,12 +29,14 @@ export default class AlgoVisualizer extends Component {
 
   componentDidMount() {
     const grid = getInitialGrid();
-    this.setState({ grid });
+    const borderedGrid = initializeBorders(grid);
+    this.setState({ grid: borderedGrid });
   }
 
   handleClearMaze() {
-    const resetGrid = getInitialGrid();
-    this.setState({ grid: resetGrid });
+    const grid = getInitialGrid();
+    const borderedGrid = initializeBorders(grid);
+    this.setState({ grid: borderedGrid });
   }
 
   handleContinue() {
@@ -144,14 +147,11 @@ export default class AlgoVisualizer extends Component {
       case 2:
         phaseView = (
           <>
-            <h5 className="sub-header">
-              3) Whenever you're ready, reset the visualizer.
-            </h5>
             <button
               className="action-button"
               onClick={() => this.handleReset()}
             >
-              Reset
+              <text className="continue-text">Reset</text>
             </button>
           </>
         );

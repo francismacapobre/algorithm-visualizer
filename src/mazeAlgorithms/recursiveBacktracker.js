@@ -1,10 +1,10 @@
-export const recursiveBacktracker = grid => {
+export const recursiveBacktracker = (grid) => {
   const borderedGrid = initBorders(grid);
   const randomizedMazeGrid = depthFirstSearch(borderedGrid);
   return randomizedMazeGrid;
 };
 
-const initBorders = grid => {
+const initBorders = (grid) => {
   const borderedGrid = grid.slice();
   for (let row = 0; row < 21; row++) {
     for (let col = 0; col < 49; col++) {
@@ -12,7 +12,7 @@ const initBorders = grid => {
       if (isBorder(row, col)) {
         const newNode = {
           ...node,
-          isWall: !node.isWall
+          isWall: !node.isWall,
         };
         borderedGrid[row][col] = newNode;
       }
@@ -26,7 +26,7 @@ const isBorder = (row, col) => {
   return row % 4 === 0 || col % 4 === 0;
 };
 
-const depthFirstSearch = borderedGrid => {
+const depthFirstSearch = (borderedGrid) => {
   var currentNode = borderedGrid[2][2];
   var visitedNodes = [];
   var openingNodes = [];
@@ -89,7 +89,7 @@ const checkUnvisitedNeighbors = (currentNode, borderedGrid, visitedNodes) => {
   return randomNeighbor;
 };
 
-const selectRandomNeighbor = unvisitedNeighbors => {
+const selectRandomNeighbor = (unvisitedNeighbors) => {
   if (unvisitedNeighbors.length > 0) {
     var i = Math.floor(Math.random() * Math.floor(unvisitedNeighbors.length));
     return unvisitedNeighbors[i];
@@ -143,7 +143,7 @@ const generateMazeOpenings = (borderedGrid, openingNodes) => {
       if (openingNodes.includes(node)) {
         const newNode = {
           ...node,
-          isWall: !node.isWall
+          isWall: !node.isWall,
         };
         borderedGrid[row][col] = newNode;
       }

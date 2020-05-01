@@ -1,9 +1,7 @@
 .node {
   width: 2vmin;
   height: 2vmin;
-  outline: 0px solid white;
   display: inline-block;
-  word-spacing: -1;
 }
 
 .node-finish {
@@ -16,7 +14,7 @@
 
 .node-visited {
   animation-name: visitedAnimation;
-  animation-duration: 1.5s;
+  animation-duration: 2s;
   animation-timing-function: ease-out;
   animation-delay: 0;
   animation-direction: alternate;
@@ -27,12 +25,12 @@
 
 @keyframes visitedAnimation {
   100% {
-    background-color: #afafdc;
+    background-color: #e6e6e6;
   }
 }
 
 .node-wall {
-  background-color: #191716;
+  background-color: #0b0c10;
 }
 
 .node-shortest-path {
@@ -48,6 +46,6 @@
 
 @keyframes shortestPath {
   100% {
-    background-color: #eef1ef;
+    background-color: #45a29e;
   }
 }
