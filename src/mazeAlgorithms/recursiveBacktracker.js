@@ -33,7 +33,6 @@ const depthFirstSearch = (borderedGrid) => {
   var nodesStack = [];
   visitedNodes.push(currentNode);
   while (!!currentNode) {
-    // Choose randomly one of the unvisited neighbours
     var nextNode = checkUnvisitedNeighbors(
       currentNode,
       borderedGrid,
@@ -41,8 +40,7 @@ const depthFirstSearch = (borderedGrid) => {
     );
     if (nextNode) {
       visitedNodes.push(nextNode);
-      // Make the chosen cell the current cell and mark it as visited
-      declareOpenings(borderedGrid, currentNode, nextNode, openingNodes); // Add "openings" to openingNodes
+      declareOpenings(borderedGrid, currentNode, nextNode, openingNodes);
       nodesStack.push(currentNode);
       currentNode = nextNode;
     } else {
@@ -50,10 +48,6 @@ const depthFirstSearch = (borderedGrid) => {
     }
   }
 
-  // After everything is done, iterate through the entire grid
-  // and toggle all instances of nodes that are opening nodes
-
-  // Return grid with openings
   return generateMazeOpenings(borderedGrid, openingNodes);
 };
 
@@ -84,7 +78,6 @@ const checkUnvisitedNeighbors = (currentNode, borderedGrid, visitedNodes) => {
     unvisitedNeighbors.push(left);
   }
 
-  // returns undefined if there are no unvisited neighbors
   var randomNeighbor = selectRandomNeighbor(unvisitedNeighbors);
   return randomNeighbor;
 };
