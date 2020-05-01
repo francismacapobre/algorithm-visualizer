@@ -4,32 +4,29 @@ export default class MazeGenerator extends Component {
   render() {
     return (
       <>
-        <h5 className="sub-header">
-          Generate (or draw) a maze until you find one you like.
-        </h5>
         <button
           className="action-button"
           onClick={() => this.props.handleGenerateMaze()}
         >
-          Generate Wide Maze
+          <text className="button-text">Generate Wide Maze</text>
         </button>
         <button
           className="action-button"
           onClick={() => this.props.handleGenerateMazeNarrow()}
         >
-          Generate Narrow Maze
+          <text className="button-text">Generate Narrow Maze</text>
         </button>
         <button
-          className="reset-button"
+          className="action-button"
           onClick={() => this.props.handleClearMaze()}
         >
-          Clear Maze
+          <text className="reset-text">Clear</text>
         </button>
         <button
-          className="continue-button"
+          className="action-button"
           onClick={() => this.props.handleContinue()}
         >
-          Continue
+          <text className="continue-text">Continue</text>
         </button>
       </>
     );

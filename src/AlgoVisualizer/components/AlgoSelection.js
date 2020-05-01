@@ -4,32 +4,29 @@ export default class AlgoSelection extends Component {
   render() {
     return (
       <>
-        <h5 className="sub-header">
-          2) Select a pathfinding algorithm to visualize.
-        </h5>
         <button
           className="action-button"
           onClick={() => this.props.handleVisualize("dijkstra")}
         >
-          Dijkstra's Algorithm
+          <text className="button-text">Dijkstra's</text>
         </button>
         <button
           className="action-button"
           onClick={() => this.props.handleVisualize("astar")}
         >
-          A* Search Algorithm
+          <text className="button-text">A* Search</text>
         </button>
         <button
           className="action-button"
           onClick={() => this.props.handleVisualize("dfs")}
         >
-          Depth-first Search Algorithm
+          <text className="button-text">DFS</text>
         </button>
         <button
           className="action-button"
           onClick={() => this.props.handleVisualize("bfs")}
         >
-          Breadth-first Search Algorithm
+          <text className="button-text">BFS</text>
         </button>
       </>
     );

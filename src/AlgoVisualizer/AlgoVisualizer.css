@@ -9,11 +9,11 @@
 
 .header {
   color: #e6e6e6;
+  font-family: "Courier New", Courier, monospace;
 }
 
 .grid {
   border-radius: 8px;
-  background-color: #c5c6c7;
   font-size: 0px;
 }
 
@@ -23,19 +23,39 @@
   align-items: center;
   border-radius: 15px 50px 30px;
   justify-content: center;
-  background-color: #c5c6c7;
+  font-family: "Courier New", Courier, monospace;
   margin-top: 4vmin;
   margin-bottom: 4vmin;
 }
 
+.button-text {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 2vmin;
+}
+
+.reset-text {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 2vmin;
+  color: red;
+}
+
+.continue-text {
+  font-family: "Courier New", Courier, monospace;
+  font-weight: bold;
+  font-size: 2vmin;
+  color: #05f140;
+}
+
 .action-button {
-  background-color: #191716;
+  background-color: #0b0c10;
   border: none;
   border-radius: 10px;
-  width: 220px;
-  height: 30px;
+  width: 40vmin;
+  height: 5vmin;
   color: white;
-  margin-bottom: 10px;
+  margin-bottom: 1vmin;
 }
 
 .reset-button {

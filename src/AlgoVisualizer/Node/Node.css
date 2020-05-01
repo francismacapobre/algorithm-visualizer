@@ -1,7 +1,7 @@
 .node {
   width: 2vmin;
   height: 2vmin;
-  outline: 0px solid #1f2833;
+  outline: 0px solid white;
   display: inline-block;
   word-spacing: -1;
 }
