@@ -1,6 +1,6 @@
 .node {
-  width: 15px;
-  height: 15px;
+  width: 2vmin;
+  height: 2vmin;
   outline: 0px solid #1f2833;
   display: inline-block;
   word-spacing: -1;

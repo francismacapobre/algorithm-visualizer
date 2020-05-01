@@ -124,7 +124,6 @@ export default class AlgoVisualizer extends Component {
 
   render() {
     const { grid, mouseIsPressed } = this.state;
-
     var phaseView;
     switch (this.state.phase) {
       case 0:
