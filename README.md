@@ -10,7 +10,7 @@ Open [francismacapobre.github.io/algorithm-visualizer/](https://francismacapobre
 
 <img src="images/main.png" width="500">
 
-Both **Wide Maze** and **Narrow Maze** are implemented with ***randomized depth-first search*** algorithm. A user may click **Generate Wide Maze**, **Generate Narrow Maze**, or click anywhere within the maze boundaries to create a custom wall pattern. Once a user finds a suitable maze, they may then click **Continue** to select a pathfinding algorithm.
+Both **Wide Maze** and **Narrow Maze** are implemented with a ***randomized depth-first search*** algorithm. A user may click **Generate Wide Maze**, **Generate Narrow Maze**, or click anywhere within the maze boundaries to create a custom wall pattern. Once a user finds a suitable maze, they may then click **Continue** to select a pathfinding algorithm.
 
 ---
 
