@@ -8,7 +8,9 @@ Open [francismacapobre.github.io/algorithm-visualizer/](https://francismacapobre
 
 ### Maze Generation Algorithm
 
-<img src="images/main.png" width="500">
+<p align="center">
+  <img src="images/main.png" width="500">
+</p>
 
 Both **Wide Maze** and **Narrow Maze** are implemented with a ***randomized depth-first search*** algorithm. A user may click **Generate Wide Maze**, **Generate Narrow Maze**, or click anywhere within the maze boundaries to create a custom wall pattern. Once a user finds a suitable maze, they may then click **Continue** to select a pathfinding algorithm.
 
@@ -16,7 +18,9 @@ Both **Wide Maze** and **Narrow Maze** are implemented with a ***randomized dept
 
 ### Uninformed & Informed Search Algorithm
 
-<img src="images/algorithms.png" width="500">
+<p align="center">
+  <img src="images/algorithms.png" width="500">
+</p>
 
 **BFS**, **DFS**, and **A\* Search** are all implementations of the **Generic search algorithm**.
 
@@ -36,5 +40,7 @@ This application includes one informed search algorithm: ***A\* Search***, which
 
 Below is a screenshot image of ***Dijkstra's algorithm*** running. All animations were implemented with ***CSS***.
 
-<img src="images/search.png" width="400">
+<p align="center">
+  <img src="images/search.png" width="400">
+ </p>
 
